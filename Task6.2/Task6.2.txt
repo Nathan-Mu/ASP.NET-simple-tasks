@@ -1,0 +1,114 @@
+// ~/Controllers/UploadFileController.cs
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace UploadFile.Controllers
+{
+    public class UploadFileController : Controller
+    {
+        // GET: UploadFile
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Index(HttpPostedFileBase postedFile)
+        {
+            if (postedFile != null)
+            {
+                string path = Server.MapPath("~/Uploads/");
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+
+                postedFile.SaveAs(path + Path.GetFileName(postedFile.FileName));
+                ViewBag.Message = "File uploaded successfully.";
+            }
+
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult UploadedImage()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult FileDirectoryInfo()
+        {
+            FileInfo file = new FileInfo(Server.MapPath("~/Uploads/Test.txt"));
+            string fileProp;
+            fileProp = "File Information";
+            fileProp += "Name: " + file.Name + " ";
+            fileProp += "Path: " + file.DirectoryName + " ";
+            fileProp += "Is Read Only: " + file.IsReadOnly + " ";
+            fileProp += "Last Access: " + file.LastAccessTime + " ";
+            fileProp += "Last Write: " + file.LastWriteTime + " ";
+            fileProp += "Length: " + file.Length / 1024;
+
+            DirectoryInfo dir = new DirectoryInfo(Server.MapPath("."));
+            string dirProp; dirProp = "Directory Information";
+            dirProp += "Name: " + dir.Name + " ";
+            dirProp += "Parent: " + dir.Parent + " ";
+            dirProp += "Full Name: " + dir.FullName + " ";
+            dirProp += "Attributes: " + dir.Attributes + " ";
+            dirProp += "Creation Time: " + dir.CreationTime;
+
+            ViewBag.Message = fileProp;
+            ViewBag.Message2 = dirProp; return View();
+        }
+
+        [HttpGet]
+        public ActionResult DirectoryList()
+        {
+
+            ArrayList fileList = new ArrayList();
+            DirectoryInfo dir = new DirectoryInfo(Server.MapPath("~/"));
+            foreach (FileInfo file in dir.GetFiles())
+            {
+                if (file.Extension != ".mdb")
+                {
+                    fileList.Add(file.Name);
+                }
+            }
+            ViewBag.fileList = fileList;
+            return View();
+        }
+    }
+}
+
+
+<!-- ~/Views/UploadFile/Index -->
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<div>
+    @using (Html.BeginForm("Index", "UploadFile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <span>Select File:</span>
+        <input type="file" name="postedFile" />
+        <hr />
+        <input type="submit" value="Upload" />
+        <hr />
+        <span style="color:green">@ViewBag.Message</span>
+    }
+</div>
+
+<h4>@Html.ActionLink("Uploaded Image", "UploadedImage", "UploadFile")</h4>
+<h4>@Html.ActionLink("File and directory info", "FileDirectoryInfo", "UploadFile")</h4>
+<h4>@Html.ActionLink("Directory List", "DirectoryList", "UploadFile")</h4>
+

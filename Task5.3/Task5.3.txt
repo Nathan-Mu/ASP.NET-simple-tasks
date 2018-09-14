@@ -1,0 +1,418 @@
+<!-- ~/Views/Home/Index.cshtml -->
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<img src="~/Images/MU_LOGO.png" width="220" />
+<div class="jumbotron">
+    <h1>M.J.A. Apllication</h1>
+    <p class="lead">M.J.A. Application is short for Monash journalists and articles application. This website collect information of all journalists and their articles.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Journalists</h2>
+        <p>
+            All monash students are free to become a journalist. They can upload their articles to this website.
+        </p>
+        <h4 class="btn btn-default">@Html.ActionLink("View Journalists", "Index", "Journalists")</h4>
+    </div>
+    <div class="col-md-6">
+        <h2>Articles</h2>
+        <p>All articles are uploaded by monash journalists.</p>
+        <h4 class="btn btn-default">@Html.ActionLink("View Articles", "Index", "Articles")</h4>
+    </div>
+</div>
+
+
+
+<!-- ~/Views/Home/About.cshtml -->
+
+@{
+    ViewBag.Title = "About";
+}
+<h2>@ViewBag.Title</h2>
+
+<p>Author: Dongyu Zhao</p>
+<p>Student ID: 27356094</p>
+<p>Unit Code: FIT5032</p>
+<p>Unit Provider: Monash University, The Caulfield School of Information Technology</p>
+<p>Task Name: FIT5032 Credit Task</p>
+<p>Tutor: Arvind Kaur</p>
+<p>
+    More info of the task:
+    <a href="http://moodle.vle.monash.edu/mod/page/view.php?id=4154651">http://moodle.vle.monash.edu/mod/page/view.php?id=4154651</a>
+</p>
+<br />
+<p>Image details</p>
+<p>
+    MU_LOGO:
+    <a href="https://www.monash.edu/">https://www.monash.edu/</a>
+</p>
+
+
+
+<!-- ~/Views/Home/Contact.cshtml -->
+
+@{
+    ViewBag.Title = "Contact";
+}
+<h2>@ViewBag.Title</h2>
+
+<p>Author: Dongyu Zhao</p>
+<p>Student ID: 27356094</p>
+<p>
+    Email Address: 
+    <a href="mailto:dzha152@student.monash.edu">dzha152@student.monash.edu</a><br />
+</p>
+
+
+
+<!-- ~/Views/Articles/Index.cshtml -->
+
+@model IEnumerable<CreditTask.Models.article>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Articles</h2>
+
+<p class="alert alert-info">
+    This page shows the information of all articles (order by publish date).
+</p> 
+<table>
+    <tr>
+        <td>
+            <select class="form-control" id="ddl">
+                <option data-column="-1">Global search</option>
+                <option data-column="0">@Html.DisplayNameFor(model => model.name)</option>
+                <option data-column="1">@Html.DisplayNameFor(model => model.category)</option>
+                <option data-column="2">@Html.DisplayNameFor(model => model.pub_date)</option>
+                <option data-column="3">Journalist Name</option>
+            </select>
+        </td>
+        <td>
+            <input type="text" class="form-control" id="search" />
+        </td>
+    </tr>
+</table>
+<br/>
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</p>
+<table class="table table-striped" id="data">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.pub_date)
+            </th>
+            <th>
+                Journalist Name
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.pub_date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.journalist.fname) @Html.DisplayFor(modelItem => item.journalist.lname)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.a_id }, new { @class = "btn btn-primary btn-xs" }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.a_id }, new { @class = "btn btn-info btn-xs" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.a_id }, new { @class = "btn btn-danger btn-xs" })
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+@section Scripts{
+    @Scripts.Render("~/Scripts/filter.articles.js")
+    }
+
+
+
+<!-- ~/Views/Journalists/Index.cshtml -->v
+
+@model IEnumerable<CreditTask.Models.journalist>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Journalists</h2>
+<p class="alert alert-info">
+    This page shows the information of all journalists (in alphabetical order by first name and last name).
+</p> 
+<table>
+    <tr>
+        <td>
+            <select class="form-control" id="ddl">
+                <option data-column="-1">Global search</option>
+                <option data-column="0">@Html.DisplayNameFor(model => model.fname)</option>
+                <option data-column="1">@Html.DisplayNameFor(model => model.lname)</option>
+                <option data-column="2">@Html.DisplayNameFor(model => model.dob)</option>
+                <option data-column="3">@Html.DisplayNameFor(model => model.address)</option>
+            </select>
+        </td>
+        <td>
+            <input type="text" class="form-control" id="search"/>
+        </td>
+    </tr>
+</table>
+<br />
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</p>
+<table class="table" id="data">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.fname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.lname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dob)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.address)
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.fname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dob)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.address)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.j_id }, new { @class = "btn btn-primary btn-xs"}) |
+            @Html.ActionLink("Details", "Details", new { id=item.j_id }, new { @class = "btn btn-info btn-xs" }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.j_id }, new { @class = "btn btn-danger btn-xs" })
+        </td>
+    </tr>
+}
+        </tbody>
+</table>
+
+@section Scripts{
+    @Scripts.Render("~/Scripts/filter.journalists.js")
+    }
+
+
+// ~/Scripts/site.js
+
+$(function () {
+    $("#date-input").datepicker({ format: 'yyyy-mm-dd' });
+});
+
+
+// ~/Scripts/filter.articles.js
+
+function filterGlobal() {
+    $('#data').DataTable().search($('#search').val()).draw();
+}
+
+function filterColumn(i) {
+    $('#data').DataTable().column(i).search($('#search').val()).draw();
+}
+
+$(function () {
+    $('#data').DataTable({
+        "order": [[2, "asc"]],
+        "dom": "lrtip",
+        "columnDefs": [{ "targets": [4], "searchable": false }]
+    });
+
+    $('#search').on('keyup click', function () {
+        if ($('#ddl').find('option:selected').attr('data-column') == '-1') {
+            filterGlobal();
+        } else {
+            filterColumn($('#ddl').find('option:selected').attr('data-column'));
+        }
+    });
+});
+
+
+// ~/Scripts/filter/journalists.js
+
+function filterGlobal() {
+    $('#data').DataTable().search($('#search').val()).draw();
+}
+
+function filterColumn(i) {
+    $('#data').DataTable().column(i).search($('#search').val()).draw();
+}
+
+$(function () {
+    $('#data').DataTable({
+        "order": [[0, "asc"], [1, "asc"]],
+        "dom": "lrtip",
+        "columnDefs": [{ "targets": [4], "searchable": false }]
+    });
+
+    $('#search').on('keyup click', function () {
+        if ($('#ddl').find('option:selected').attr('data-column') == '-1') {
+            filterGlobal();
+        } else {
+            filterColumn($('#ddl').find('option:selected').attr('data-column'));
+        }
+    });
+});
+
+
+
+
+//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated from a template.
+//
+//     Manual changes to this file may cause unexpected behavior in your application.
+//     Manual changes to this file will be overwritten if the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+namespace CreditTask.Models
+{
+    using System;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+    using System.Collections.Generic;
+    
+    public partial class article
+    {
+        public int a_id { get; set; }
+
+        [Display(Name = "Name")]
+        [Required(ErrorMessage = "Name cannot be empty")]
+        [StringLength(255, ErrorMessage = "Name cannot be longer than 255-digit")]
+        public string name { get; set; }
+
+        [Display(Name = "Category")]
+        [Required(ErrorMessage = "Category cannot be empty")]
+        [StringLength(50, ErrorMessage = "Category cannot be longer than 50-digit")]
+        public string category { get; set; }
+
+        [Display(Name = "Publish Date")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [Required(ErrorMessage = "Publish date cannot be empty")]
+        //[DataType(DataType.Date, ErrorMessage = "Please pick a date")]
+        [Historical(ErrorMessage = "Publish date should be a historical date")]
+        public System.DateTime pub_date { get; set; }
+
+        [Display(Name = "Journalist ID")]
+        public int j_id { get; set; }
+    
+        public virtual journalist journalist { get; set; }
+ 
+    }
+    
+}
+
+
+//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated from a template.
+//
+//     Manual changes to this file may cause unexpected behavior in your application.
+//     Manual changes to this file will be overwritten if the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+namespace CreditTask.Models
+{
+    using System;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+    using System.Collections.Generic;
+    
+    public partial class journalist
+    {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public journalist()
+        {
+            this.articles = new HashSet<article>();
+        }
+    
+        public int j_id { get; set; }
+
+        [Display(Name = "First Name")]
+        [Required(ErrorMessage = "First name cannot be blank")]
+        [StringLength(50, ErrorMessage = "First name cannot be longer than 50-digit")]
+        public string fname { get; set; }
+
+        [Display(Name = "Last Name")]
+        [Required(ErrorMessage = "Last name cannot be blank")]
+        [StringLength(50, ErrorMessage = "Last name cannot be longer than 50-digit")]
+        public string lname { get; set; }
+
+        [Display(Name = "Date of Birth")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [Required(ErrorMessage = "Date of birth cannot be blank")]
+        //[DataType(DataType.Date, ErrorMessage = "Please pick a date")]
+        [Historical(ErrorMessage = "Date of birth should be a historical date")]
+        public System.DateTime dob { get; set; }
+
+        [Display(Name = "Address")]
+        [Required(ErrorMessage = "Address cannot be blank")]
+        [StringLength(255, ErrorMessage = "Address cannot be longer than 255-digit")]
+        public string address { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<article> articles { get; set; }
+    }
+
+    public class Historical: ValidationAttribute
+    {
+        public override bool IsValid(object value)
+        {
+            if (value == null)
+                return true;
+            else
+            {
+                return (DateTime)value < DateTime.Today;
+            }
+            
+        }
+    }
+    
+}

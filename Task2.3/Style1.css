@@ -1,0 +1,91 @@
+﻿body {
+    background-color:#ffde90;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.title {
+    text-align:center;
+    color:red;
+}
+
+.label1 {
+    font-weight:bold;
+}
+
+.label2 {
+    background-color:#ffffde;
+}
+
+.label3 {
+    text-align:center;
+    font-weight:bold;
+}
+
+.results {
+    font-weight:bold;
+}
+
+.textBox1 {
+    border:dashed;
+    border-color:red;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+
+.textBox2 {
+    border:double;
+    border-color:blue;
+    font-family:'Global Sans Serif'
+}
+
+.textBox3 {
+    background-color:gray;
+}
+
+.textBox4 {
+    border:medium;
+}
+
+.panel {
+    border:double;
+    border-color:red;
+    margin-left:80px;
+    margin-right:80px;
+}
+
+.calendar {
+    background-color:darkred;
+    border-color:red;
+    border-style:double;
+    border-width:medium;
+}
+
+.dayHeaderStyle {
+    background-color:purple;
+}
+
+.titleStyle {
+    font-weight:bold;
+    background-color:gray;
+}
+
+.todayDayStyle {
+    background-color:yellow;
+    color:blue;
+}
+
+.weekendDayStyle {
+    background-color:yellowgreen;
+}
+
+.otherMonthDayStyle {
+    background-color:pink;
+}
+
+.selectedDayStyle {
+    background-color:red;
+    color:white;
+}
+
+.datStyle {
+    background-color:orange;
+}

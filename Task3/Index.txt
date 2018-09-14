@@ -1,0 +1,14 @@
+﻿
+<!--Dongyu Zhao 27356094-->
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Home Page</h1>
+    <p class="lead">This is page has been modified.</p>
+    <p>By Dongyu Zhao 27356094</p>
+    <a href="~/Content/WebForm1.aspx">Open a new page</a>
+    <br />
+    <img src="@Url.Content("~/Content/Monash.png")" />
+</div>
